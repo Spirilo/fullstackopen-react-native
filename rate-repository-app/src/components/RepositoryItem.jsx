@@ -32,6 +32,7 @@ const headerStyles = StyleSheet.create({
   description: {
     fontSize: theme.fontSizes.body,
     color: theme.colors.textSecondary,
+    fontFamily: theme.fonts.main
   },
 })
 
