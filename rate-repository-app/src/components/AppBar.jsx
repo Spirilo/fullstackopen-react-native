@@ -5,9 +5,8 @@ import Text from './Text';
 
 const styles = StyleSheet.create({
   container: {
-    flex: 0.5,
     paddingTop: Constants.statusBarHeight,
-    backgroundColor: theme.colors.backGround,
+    backgroundColor: theme.colors.appBar,
     flexDirection: 'column',
     justifyContent: 'flex-end'
 
