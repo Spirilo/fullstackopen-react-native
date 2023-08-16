@@ -99,7 +99,7 @@ const RepositoryItem = ({ image, name, description, language, forks, stars, rati
   })
 
   return(
-    <View style={styles.container}>
+    <View testID="repositoryItem" style={styles.container}>
       <RepositoryHeader 
         image={image}
         name={name}
