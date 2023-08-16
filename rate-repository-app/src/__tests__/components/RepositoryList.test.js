@@ -53,7 +53,7 @@ describe('RepositoryList', () => {
       const repositoryItems = screen.getAllByTestId('repositoryItem');
       const [firstRepositoryItem, secondRepositoryItem] = repositoryItems;
 
-      screen.debug();
+      //screen.debug();
 
       //test Fullname
       expect(firstRepositoryItem).toHaveTextContent('jaredpalmer/formik');
