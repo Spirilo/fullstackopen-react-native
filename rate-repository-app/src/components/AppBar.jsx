@@ -29,7 +29,6 @@ const styles = StyleSheet.create({
 
 const AppBar = () => {
   const { me } = useMe();
-  console.log(me)
   const [signOut] = useSignOut();
 
   return (

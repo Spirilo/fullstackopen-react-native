@@ -1,6 +1,7 @@
-import { Image, View, StyleSheet } from "react-native";
+import { Image, View, StyleSheet, Pressable } from "react-native";
 import Text from './Text';
 import theme from "../theme";
+import * as Linking from 'expo-linking';
 
 const headerStyles = StyleSheet.create({
   container: {
@@ -90,13 +91,28 @@ const RepositoryBody = ({ forks, stars, rating, reviews }) => {
   )
 };
 
-const RepositoryItem = ({ image, name, description, language, forks, stars, rating, reviews }) => {
-  const styles = StyleSheet.create({
-    container: {
-      backgroundColor: '#cfffed',
-      paddingBottom: 5
-    },
-  })
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: '#cfffed',
+    paddingBottom: 5
+  },
+  button: {
+    backgroundColor: theme.colors.primary,
+    padding: 2,
+    borderRadius: 10,
+  },
+  text: {
+    color: theme.colors.third,
+    textAlign: 'center',
+    padding: 10,
+  },
+})
+
+const RepositoryItem = ({ image, name, description, language, forks, stars, rating, reviews, url }) => {
+
+  const openLink = () => {
+    Linking.openURL(url);
+  }
 
   return(
     <View testID="repositoryItem" style={styles.container}>
@@ -112,6 +128,13 @@ const RepositoryItem = ({ image, name, description, language, forks, stars, rati
         rating={rating}
         reviews={reviews}
       />
+      {url ?
+        <Pressable style={styles.button} onPress={openLink}>
+          <Text style={styles.text}>Open in GitHub</Text>
+        </Pressable>
+      :
+        null
+      }
     </View>
   )
 };
