@@ -29,8 +29,8 @@ const styles = StyleSheet.create({
   },
   container: {
     backgroundColor: '#cfffed',
-    paddingBottom: 5,
-    flexDirection: 'row'
+    paddingBottom: 10,
+    flexDirection: 'row',
   },
   ratingContainer: {
     flexGrow: 0,

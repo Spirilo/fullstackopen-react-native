@@ -18,13 +18,15 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.primary,
     padding: 2,
     borderRadius: 10,
+    margin: 5,
+    borderWidth: 1
   },
   text: {
     color: theme.colors.third,
     textAlign: 'center',
     padding: 10,
   }
-})
+});
 
 const SignInForm = ({ onSubmit }) => {
   return (

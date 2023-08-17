@@ -94,12 +94,15 @@ const RepositoryBody = ({ forks, stars, rating, reviews }) => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#cfffed',
-    paddingBottom: 5
+    paddingBottom: 10,
+    
   },
   button: {
     backgroundColor: theme.colors.primary,
     padding: 2,
     borderRadius: 10,
+    borderWidth: 1,
+    margin: 5
   },
   text: {
     color: theme.colors.third,

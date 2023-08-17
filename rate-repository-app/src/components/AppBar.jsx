@@ -33,20 +33,28 @@ const AppBar = () => {
 
   return (
     <View style={styles.container}>
-      <ScrollView horizontal={true} style={styles.scroll}>
-        <Link to='/' style={styles.link}>
-          <Text color='textSecondary' fontWeight='bold' style={styles.pad}>Repositories</Text>
-        </Link>
         {me ?
-          <Link to='/' style={styles.link} onPress={signOut}>
-            <Text color='textSecondary' fontWeight='bold' style={styles.pad}>Sign out</Text>
-          </Link>
+          <ScrollView horizontal={true} style={styles.scroll}>
+            <Link to='/' style={styles.link}>
+              <Text color='textSecondary' fontWeight='bold' style={styles.pad}>Repositories</Text>
+            </Link>
+            <Link to='/review' style={styles.link}>
+              <Text color='textSecondary' fontWeight='bold' style={styles.pad}>Create a review</Text>
+            </Link>
+            <Link to='/' style={styles.link} onPress={signOut}>
+              <Text color='textSecondary' fontWeight='bold' style={styles.pad}>Sign out</Text>
+            </Link>
+          </ScrollView>
         :
-          <Link to='/signin' style={styles.link}>
-            <Text color='textSecondary' fontWeight='bold' style={styles.pad}>Sign in</Text>
-          </Link>
+          <ScrollView horizontal={true} style={styles.scroll}>
+            <Link to='/' style={styles.link}>
+              <Text color='textSecondary' fontWeight='bold' style={styles.pad}>Repositories</Text>
+            </Link>
+            <Link to='/signin' style={styles.link}>
+              <Text color='textSecondary' fontWeight='bold' style={styles.pad}>Sign in</Text>
+            </Link>
+          </ScrollView>
         }
-      </ScrollView>
     </View>
   )
 };

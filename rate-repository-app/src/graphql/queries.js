@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client";
 
-import { REPO_DETAILS } from "./fragments";
+import { REPO_DETAILS, REVIEW_DETAILS } from "./fragments";
 
 export const GET_REPOSITORIES = gql`
   query {
@@ -32,18 +32,11 @@ export const GET_REPO = gql`
       reviews {
         edges {
           node {
-            id
-            text
-            rating
-            createdAt
-            user {
-              id
-              username
-            }
+            ...ReviewDetails
           }
         }
       }
     }
   }
-  ${REPO_DETAILS}
+  ${REPO_DETAILS} ${REVIEW_DETAILS}
 `;
