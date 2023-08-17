@@ -53,6 +53,9 @@ const AppBar = () => {
             <Link to='/signin' style={styles.link}>
               <Text color='textSecondary' fontWeight='bold' style={styles.pad}>Sign in</Text>
             </Link>
+            <Link to='/signup' style={styles.link}>
+              <Text color='textSecondary' fontWeight='bold' style={styles.pad}>Sign up</Text>
+            </Link>
           </ScrollView>
         }
     </View>
