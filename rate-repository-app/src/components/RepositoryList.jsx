@@ -2,19 +2,28 @@ import { FlatList, View, StyleSheet, Pressable } from 'react-native';
 import { useNavigate } from 'react-router-native';
 import { Picker } from '@react-native-picker/picker';
 import { useState } from 'react';
+import { Searchbar } from 'react-native-paper';
 
 import RepositoryItem from './RepositoryItem';
 import useRepositories from '../hooks/useRepositories';
+import theme from '../theme';
+import { useDebounce } from 'use-debounce';
 
 const styles = StyleSheet.create({
   separator: {
     height: 10,
   },
+  search: {
+    padding: 2,
+    borderRadius: 10,
+    margin: 5,
+    backgroundColor: theme.colors.search
+  }
 });
 
 const ItemSeparator = () => <View style={styles.separator} />;
 
-export const RepositoryListContainer = ({ repositories, order, setOrder }) => {
+export const RepositoryListContainer = ({ repositories, order, setOrder, searchQuery, onChangeSearch }) => {
   const navigate = useNavigate();
   const repositoryNodes = repositories
     ? repositories.edges.map(edge => edge.node)
@@ -47,23 +56,36 @@ export const RepositoryListContainer = ({ repositories, order, setOrder }) => {
       }
       keyExtractor={item => item.id}
       ListHeaderComponent={
-      <Picker
-        selectedValue={order}
-        onValueChange={(itemValue) =>
-          setOrder(itemValue)
-      }>
-        <Picker.Item label="Select order.." value="" enabled={false} />
-        <Picker.Item label="Latest repositories" value="latest" />
-        <Picker.Item label="Oldest repositories" value="oldest" />
-        <Picker.Item label="Highest rated repositories" value="highest" />
-        <Picker.Item label="Lowest rated repositories" value="lowest" />
-      </Picker>}
+      <>
+        <Searchbar
+          style={styles.search}
+          placeholder="Search"
+          onChangeText={onChangeSearch}
+          value={searchQuery}
+        />
+        <Picker
+          selectedValue={order}
+          onValueChange={(itemValue) =>
+            setOrder(itemValue)
+        }>
+          <Picker.Item label="Select order.." value="" enabled={false} />
+          <Picker.Item label="Latest repositories" value="latest" />
+          <Picker.Item label="Oldest repositories" value="oldest" />
+          <Picker.Item label="Highest rated repositories" value="highest" />
+          <Picker.Item label="Lowest rated repositories" value="lowest" />
+        </Picker>
+      </>
+      }
     />
    );
 };
 
 const RepositoryList = () => {
   const [order, setOrder] = useState('latest');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchKeyword] = useDebounce(searchQuery, 500);
+
+  const onChangeSearch = query => setSearchQuery(query);
 
   let orderBy;
   let orderDirection;
@@ -87,13 +109,15 @@ const RepositoryList = () => {
       break;
   }
 
-  const { repositories } = useRepositories(orderBy, orderDirection);
+  const { repositories } = useRepositories(orderBy, orderDirection, searchKeyword);
 
   return (
     <RepositoryListContainer
       repositories={repositories} 
       order={order}
       setOrder={setOrder}
+      onChangeSearch={onChangeSearch}
+      searchQuery={searchQuery}
     />
   )
 };

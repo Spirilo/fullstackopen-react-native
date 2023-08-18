@@ -8,7 +8,8 @@ const theme = {
     appBar: '#24292e',
     main: 'white',
     third: 'white',
-    error: '#d73a4a'
+    error: '#d73a4a',
+    search: 'lightgrey'
   },
   fontSizes: {
     body: 14,
