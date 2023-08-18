@@ -1,8 +1,10 @@
 import { FlatList, View, StyleSheet, Pressable } from 'react-native';
+import { useNavigate } from 'react-router-native';
+import { Picker } from '@react-native-picker/picker';
+import { useState } from 'react';
 
 import RepositoryItem from './RepositoryItem';
 import useRepositories from '../hooks/useRepositories';
-import { useNavigate } from 'react-router-native';
 
 const styles = StyleSheet.create({
   separator: {
@@ -12,7 +14,7 @@ const styles = StyleSheet.create({
 
 const ItemSeparator = () => <View style={styles.separator} />;
 
-export const RepositoryListContainer = ({ repositories }) => {
+export const RepositoryListContainer = ({ repositories, order, setOrder }) => {
   const navigate = useNavigate();
   const repositoryNodes = repositories
     ? repositories.edges.map(edge => edge.node)
@@ -44,15 +46,56 @@ export const RepositoryListContainer = ({ repositories }) => {
       </Pressable>
       }
       keyExtractor={item => item.id}
-      // other props
+      ListHeaderComponent={
+      <Picker
+        selectedValue={order}
+        onValueChange={(itemValue) =>
+          setOrder(itemValue)
+      }>
+        <Picker.Item label="Select order.." value="" enabled={false} />
+        <Picker.Item label="Latest repositories" value="latest" />
+        <Picker.Item label="Oldest repositories" value="oldest" />
+        <Picker.Item label="Highest rated repositories" value="highest" />
+        <Picker.Item label="Lowest rated repositories" value="lowest" />
+      </Picker>}
     />
    );
 };
 
 const RepositoryList = () => {
-  const { repositories } = useRepositories();
+  const [order, setOrder] = useState('latest');
 
-  return <RepositoryListContainer repositories={repositories} />;
+  let orderBy;
+  let orderDirection;
+
+  switch(order) {
+    case 'latest':
+      orderBy = 'CREATED_AT';
+      orderDirection = 'DESC';
+      break;
+    case 'oldest':
+      orderBy = 'CREATED_AT';
+      orderDirection = 'ASC';
+      break;
+    case 'highest':
+      orderBy = 'RATING_AVERAGE';
+      orderDirection = 'DESC';
+      break;
+    case 'lowest':
+      orderBy = 'RATING_AVERAGE';
+      orderDirection = 'ASC';
+      break;
+  }
+
+  const { repositories } = useRepositories(orderBy, orderDirection);
+
+  return (
+    <RepositoryListContainer
+      repositories={repositories} 
+      order={order}
+      setOrder={setOrder}
+    />
+  )
 };
 
 export default RepositoryList;
