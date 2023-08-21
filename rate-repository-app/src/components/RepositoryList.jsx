@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
 
 const ItemSeparator = () => <View style={styles.separator} />;
 
-export const RepositoryListContainer = ({ repositories, order, setOrder, searchQuery, onChangeSearch }) => {
+export const RepositoryListContainer = ({ repositories, onEndReach, order, setOrder, searchQuery, onChangeSearch }) => {
   const navigate = useNavigate();
   const repositoryNodes = repositories
     ? repositories.edges.map(edge => edge.node)
@@ -55,6 +55,8 @@ export const RepositoryListContainer = ({ repositories, order, setOrder, searchQ
       </Pressable>
       }
       keyExtractor={item => item.id}
+      onEndReached={onEndReach}
+      onEndReachedThreshold={0.5}
       ListHeaderComponent={
       <>
         <Searchbar
@@ -109,11 +111,22 @@ const RepositoryList = () => {
       break;
   }
 
-  const { repositories } = useRepositories(orderBy, orderDirection, searchKeyword);
+  const { repositories, fetchMore } = useRepositories({
+    first: 3,
+    orderBy,
+    orderDirection,
+    searchKeyword
+  });
+
+  const onEndReach = () => {
+    console.log('You have reached the end of the list');
+    fetchMore();
+  }
 
   return (
     <RepositoryListContainer
       repositories={repositories} 
+      onEndReach={onEndReach}
       order={order}
       setOrder={setOrder}
       onChangeSearch={onChangeSearch}
