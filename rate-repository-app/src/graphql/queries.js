@@ -37,6 +37,7 @@ export const GET_USER = gql`
             text
             repository {
               fullName
+              id
             }
           }
         }
