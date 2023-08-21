@@ -81,9 +81,9 @@ const SingleRepository = () => {
     ? repository.reviews.edges.map(edge => edge.node)
     : [];
 
-    const onEndReach = () => {
-      fetchMore();
-    }
+  const onEndReach = () => {
+    fetchMore();
+  };
 
   return (
     <FlatList
